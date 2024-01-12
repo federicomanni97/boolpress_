@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     /**
@@ -40,9 +41,9 @@ class PostController extends Controller
         // aggiungo slug al formdata
         $formData['slug'] = $slug;
         // prendiamo l'id dell'utente che sta facendo l'operazione
-        $userId = auth()->id();
+        $userId = Auth::id();
         // aggiungiamo l'id dell'utente
-        $formData['userId'] = $userId;
+        $formData['user_id'] = $userId;
         $post = Post::create($formData);
         return redirect()->route('admin.posts.show', $post->id);
     }
